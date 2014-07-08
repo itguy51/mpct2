@@ -1,0 +1,24 @@
+{
+  "name": "mpct2",
+  "version": "0.1.0",
+  "description": "mpct2",
+  "main": "app.js",
+  "dependencies": {
+    "komponist": "^0.1.0",
+    "socket.io": "^1.0.6",
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itguy51/mpct2.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itguy51/mpct2/issues"
+  },
+  "homepage": "https://github.com/itguy51/mpct2"
+}
