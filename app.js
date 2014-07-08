@@ -12,7 +12,6 @@ var client = komponist.createConnection(config.mpdPort, config.mpdHost, function
   
 
   refreshPlaylists();
-
 });
 
 
@@ -37,6 +36,9 @@ function handler (req, res) {
 io.on('connection', function (socket) {
 
   refreshPlaylists();
+  updateShuffleStatus(function(shf){
+      socket.emit('shuffleStatus', {data:shf});
+    });
   socket.emit('playlistList', {inner:playlistList});
   getPlayingSong(function(song){
       socket.emit('playSongID', {data:song});
@@ -63,6 +65,12 @@ io.on('connection', function (socket) {
     //use sck.shr for a shortcode to add to mpd. Rewrite as needed.
     console.log(sck.shr);
   });
+  socket.on('shuffleChange', function(da){
+    changeShfl();
+    updateShuffleStatus(function(shf){
+      socket.emit('shuffleStatus', {data:shf});
+    });
+  });
 });
 
 client.on('changed', function(system) {
@@ -77,6 +85,9 @@ client.on('changed', function(system) {
       io.emit('playlistList', {inner:playlistList});
       break;
     case 'options':
+      updateShuffleStatus(function(shf){
+        io.emit('shuffleStatus', {data:shf});
+      });
       //This happens if the modes are changed, i.e. repeat, other stuff.
    }
  });
@@ -103,6 +114,17 @@ function getPlayingSong(callbackFunction){
 	});
 }
 
+function updateShuffleStatus(callbackFunction){
+  client.status(function(err, r){
+    callbackFunction(parseInt(r.random));
+
+  });
+}
+function changeShfl(){
+  client.status(function(err, r){
+    (r.random == '1')? client.random(0) : client.random(1);
+  });
+}
 
 
 

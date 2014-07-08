@@ -10,8 +10,14 @@ var socket = io('http://localhost:8080');
   socket.on('playlistList', function (data) {
     changeList("#playlist", data.inner);
 });
+socket.on('shuffleStatus', function (data) {
+    if(data.data == 1){
+    	$("#shuffle").removeClass('btn-default').addClass('btn-primary');
+    }else{
+    	$("#shuffle").removeClass('btn-primary').addClass('btn-default');
+    }
+});
 socket.on('playSongID', function(d){
-	console.log(d);
 	$(".active").removeClass('active');
 	$("a[data-item='" + d.data + "']").addClass('active');
 });
@@ -20,6 +26,9 @@ socket.on('playSongID', function(d){
 $(document).ready(function(){
 	$("#prev").click(function(){
 		socket.emit('prev', null);
+	});
+	$("#shuffle").click(function(){
+		socket.emit('shuffleChange', null);
 	});
 	$("#next").click(function(){
 		socket.emit('next', null);
@@ -111,7 +120,6 @@ function searchFuse(hotterm, clearOut){
   	result[i].idx = i+1;
   	fl.push(result[i]);
   };
-  console.log(fl);
   var scope = angular.element($("#fuseList")).scope();
   if(clearOut){
   	fl = [];

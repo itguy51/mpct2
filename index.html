@@ -9,13 +9,12 @@
 	   \ \__\    \ \__\ \__\    \ \_______\  \ \__\ |\________\
 	    \|__|     \|__|\|__|     \|_______|   \|__|  \|_______|                                                 
 	-->
-	<title></title>
+	<title>mpct2</title>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/angular.min.js"></script>
 	<script src="/js/fuse.min.js"></script>
-	<!--I'll implement Fuse later (fuzzy path matching. woot.)-->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 	<script src="/js/bootstrap.min.js"></script>
@@ -36,7 +35,9 @@
    					<button type="button" id="prev" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span> Prev</button>
 					<button type="button" id="toggle" class="btn btn-default">Toggle</button>
 					<button type="button" id="next" class="btn btn-default">Next <span class="glyphicon glyphicon-fast-forward"></span></button>
+					<button type="button" id="shuffle" class="btn btn-primary"><span class="glyphicon glyphicon-random"></span>&nbsp;</button>
    				</div>
+
    				<br />
    				<br />
    				<div class="form-group">
