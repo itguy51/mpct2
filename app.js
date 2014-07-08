@@ -1,12 +1,22 @@
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
-var mpdSocket = require('mpdsocket');
-var mpd = new mpdSocket('localhost','6600');
-
+var komponist = require('komponist')
 var mpdConnection = false;
-var playlistList;
+var playlistList = [];
 app.listen(8080);
+
+var client = komponist.createConnection(6600, 'localhost', function() {
+  mpdConnection = true;
+  
+
+  refreshPlaylists();
+
+});
+
+
+
+
 
 function handler (req, res) {
 
@@ -23,27 +33,56 @@ function handler (req, res) {
 }
 
 
-mpd.on('connect',function() {
-	mpdConnection = true;
-	refreshPlaylists();
-	
+io.on('connection', function (socket) {
+  refreshPlaylists();
+  socket.emit('playlistList', {inner:playlistList});
+  getPlayingSong(function(song){
+      socket.emit('playSongID', {data:song});
+  });
+
+  socket.on('playsong', function(data){
+  	client.play(data.data);
+  	getPlayingSong(function(song){
+      socket.emit('playSongID', {data:song});
+
+    });
+  })
 });
 
-io.on('connection', function (socket) {
-  socket.emit('playlistList', {inner:playlistList});
-});
+client.on('changed', function(system) {
+   switch (system){
+    case 'player':
+      getPlayingSong(function(song){
+        io.emit('playSongID', {data:song});
+      });
+      break;
+    case 'playlist':
+      refreshPlaylists();
+      io.emit('playlistList', {inner:playlistList});
+      break;
+    case 'options':
+      //This happens if the modes are changed, i.e. repeat, other stuff.
+   }
+ });
+
 
 io.on('requestPlaylist', function (socket){
+  refreshPlaylists();
 	socket.emit('playlistList', {inner:playlistList});
 });
 
+
 function refreshPlaylists(){
-	if(mpdConnection){
-		mpd.send('playlistinfo',function(r) {
-        	playlistList = r;
-        	console.log(r);
-        	delete playlistList._ordered_list;
-        	delete playlistList._OK;
-    	});
-	}
+  client.playlistinfo(function(err, info){
+    playlistList = info;
+  });
+  for (var i = 0; i < playlistList.length; i++) {
+    playlistList[i].Pos = parseInt(playlistList[i].Pos);
+  }
+}
+
+function getPlayingSong(callbackFunction){
+	client.status(function(err, r) {
+    	callbackFunction(r.song);
+	});
 }

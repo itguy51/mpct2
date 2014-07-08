@@ -13,13 +13,22 @@
 
 </head>
 <body>
-	<div class="row">&nbsp;&nbsp;</div>
 	<div class="row">
-		<div class="col-md-3">&nbsp;</div>
-		<div class="col-md-6">
+		<div class="col-md-6 col-md-offset-1">
+			<br />
 			<div class="list-group" id="playlist" ng-controller="playlistController">
 				<!--add class active-->
-				<a href="#" ng-repeat="item in innerList" class="list-group-item">{{item.Title}} by {{item.Artist}}</a>
+				<a id="{{item.Pos}}" ng-repeat="item in innerList | orderBy:'Pos'" data-item="{{item.Pos}}" ng-click="playItem(item.Pos)" class="list-group-item">{{item.Artist}} - {{item.Title}}</a>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<br />
+			<div class="text-center">
+   				<div class="btn-group btn-group-lg">
+   					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span> Prev</button>
+					<button type="button" class="btn btn-default">Toggle</button>
+					<button type="button" class="btn btn-default">Next <span class="glyphicon glyphicon-fast-forward"></span></button>
+   				</div>
 			</div>
 		</div>
 	</div>
