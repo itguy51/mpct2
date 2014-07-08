@@ -1,12 +1,13 @@
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
+var config = require("./config");
 var komponist = require('komponist')
 var mpdConnection = false;
 var playlistList = [];
-app.listen(8080);
+app.listen(config.httpServerPort);
 
-var client = komponist.createConnection(6600, 'localhost', function() {
+var client = komponist.createConnection(config.mpdPort, config.mpdHost, function() {
   mpdConnection = true;
   
 
@@ -34,6 +35,7 @@ function handler (req, res) {
 
 
 io.on('connection', function (socket) {
+
   refreshPlaylists();
   socket.emit('playlistList', {inner:playlistList});
   getPlayingSong(function(song){
@@ -46,7 +48,21 @@ io.on('connection', function (socket) {
       socket.emit('playSongID', {data:song});
 
     });
-  })
+  });
+  socket.on('toggle', function(sck){
+    client.toggle();
+  //sck.emit('setToggle', {tgl:})
+  });
+  socket.on('next', function(sck){
+    client.command('next');
+  });
+  socket.on('prev', function(sck){
+    client.command('previous');
+  });
+  socket.on('addbysc', function(sck){
+    //use sck.shr for a shortcode to add to mpd. Rewrite as needed.
+    console.log(sck.shr);
+  });
 });
 
 client.on('changed', function(system) {
@@ -86,3 +102,15 @@ function getPlayingSong(callbackFunction){
     	callbackFunction(r.song);
 	});
 }
+
+
+
+
+
+
+
+
+
+
+
+//mpct2/app.js

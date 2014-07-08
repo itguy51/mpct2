@@ -1,23 +1,31 @@
 <html ng-app>
 <head>
+	<!--
+	 _____ ______   ________  ________ _________   _______     
+	|\   _ \  _   \|\   __  \|\   ____\\___   ___\/  ___  \    
+	\ \  \\\__\ \  \ \  \|\  \ \  \___\|___ \  \_/__/|_/  /|   
+	 \ \  \\|__| \  \ \   ____\ \  \       \ \  \|__|//  / /   
+	  \ \  \    \ \  \ \  \___|\ \  \____   \ \  \   /  /_/__  
+	   \ \__\    \ \__\ \__\    \ \_______\  \ \__\ |\________\
+	    \|__|     \|__|\|__|     \|_______|   \|__|  \|_______|                                                 
+	-->
 	<title></title>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/angular.min.js"></script>
+	<script src="/js/fuse.min.js"></script>
+	<!--I'll implement Fuse later (fuzzy path matching. woot.)-->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/client.js"></script>
-
-
 </head>
 <body>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-1">
 			<br />
 			<div class="list-group" id="playlist" ng-controller="playlistController">
-				<!--add class active-->
 				<a id="{{item.Pos}}" ng-repeat="item in innerList | orderBy:'Pos'" data-item="{{item.Pos}}" ng-click="playItem(item.Pos)" class="list-group-item">{{item.Artist}} - {{item.Title}}</a>
 			</div>
 		</div>
@@ -25,12 +33,21 @@
 			<br />
 			<div class="text-center">
    				<div class="btn-group btn-group-lg">
-   					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span> Prev</button>
-					<button type="button" class="btn btn-default">Toggle</button>
-					<button type="button" class="btn btn-default">Next <span class="glyphicon glyphicon-fast-forward"></span></button>
+   					<button type="button" id="prev" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span> Prev</button>
+					<button type="button" id="toggle" class="btn btn-default">Toggle</button>
+					<button type="button" id="next" class="btn btn-default">Next <span class="glyphicon glyphicon-fast-forward"></span></button>
    				</div>
+   				<br />
+   				<br />
+   				<div class="form-group">
+				  <input class="form-control" id="genre" placeholder="Enter a genre or shortcode"></input>
+				</div>
+				<div class="list-group" id="fuseList" ng-controller="fuseController">
+					<a id="{{item.Pos}}" ng-repeat="item in fuseList | orderBy:'idx'" data-idx="{{item.idx}}" data-shortcode="{{item.short_name}}" ng-click="addItem(item.idx)" class="list-group-item">{{item.full_name}}</a>
+				</div>
 			</div>
 		</div>
 	</div>
 </body>
 </html>
+<!--mpct2/index.html-->

@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>mpct</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="jquery.mobile-1.0.min.css" />
+<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="mpct.js"></script>
+<script type="text/javascript" src="jquery.mobile-1.0.min.js"></script>
+<style type="text/css">
+div#message { font-size: 70%; }
+body { text-align: center }
+</style>
+</head>
+<body>
+<div data-role="page" data-theme="a" data-title="mpct">
+
+<div data-role="header">
+    <h1>mpct</h1>
+</div>
+
+<div data-role="content">
+
+<form id="m_form" method="post">
+    <label for="m_host" style="display:none">Host</label>
+    <select id="m_host" name="m[host]">
+        	<option selected>mobius</option>
+	<option>thmbp</option>
+	<option>therver</option>
+    </select>
+
+    <fieldset data-role="controlgroup">
+    <input type="radio" id="m_action_randomTracks" name="m[action]" value="randomTracks" checked>
+    <label for="m_action_randomTracks">Random Tracks</label>
+
+    <input type="radio" id="m_action_randomAlbums" name="m[action]" value="randomAlbums">
+    <label for="m_action_randomAlbums">Random Albums</label>
+
+    <input type="radio" id="m_action_thisAlbum" name="m[action]" value="thisAlbum">
+    <label for="m_action_thisAlbum">This Album</label>
+    </fieldset>
+
+    <select id="m_BT" name="m[BT]">
+        <option value="00">All Genres</option>
+<option value="am">Ambient</option>
+<option value="ab">Ambient Beats</option>
+<option value="bb">Breakbeat</option>
+<option value="bc">Breakcore, Gabber, and Noise</option>
+<option value="ch">Chill Out and Dub</option>
+<option value="cl">Classical</option>
+<option value="co">Compilations</option>
+<option value="dj">DJ Beats</option>
+<option value="db">Drum 'n Bass</option>
+<option value="dt">Dub Techno</option>
+<option value="du">Dubstep</option>
+<option value="el">Electronic and Electro</option>
+<option value="fo">Folk</option>
+<option value="go">Goa</option>
+<option value="ho">House</option>
+<option value="id">IDM</option>
+<option value="ja">Jazz</option>
+<option value="me">Metal</option>
+<option value="mi">Minimalistic</option>
+<option value="po">Pop</option>
+<option value="pr">Post-rock</option>
+<option value="ra">Rap and Hip Hop</option>
+<option value="re">Reggae and Dub</option>
+<option value="ro">Rock</option>
+<option value="sl">Soul</option>
+<option value="so">Soundtracks</option>
+<option value="te">Techno</option>
+<option value="tr">Trance</option>
+<option value="th">Trip-Hop</option>
+<option value="we">Weird</option>
+<option value="wo">World and New Age</option>
+    </select>
+
+    <label for="m_count" style="display:none">Count</label>
+    <input type="range" name="m[count]" id="m_count" value="5" min="1" max="20">
+
+    <input type="checkbox" id="m_append" name="m[append]">
+    <label for="m_append">Append</label>
+
+    <input type="submit" id="m_submit" value="  Go  ">
+    <div id="message"><pre>$ .../mpct.php -h mobius -o webui --raw status
+Move D - Heidelberg Gals (Parts One, Tw
+[playing] #1/20   7:37/11:04 (68%)
+volume:100%   repeat: off   random: off   single: off   consume: off</pre></div>
+</form>
+
+<div data-role="controlgroup" data-type="horizontal">
+    <a id="a_prev" data-role="button" data-icon="arrow-l">Prev</a>
+    <a id="a_toggle" data-role="button">Toggle</a>
+    <a id="a_next" data-role="button" data-icon="arrow-r">Next</a>
+</div>
+
+
+<ul id="pl" data-role="listview" data-inset="true">
+    <li role="header" data-role="list-divider">Playlist</li>
+    <li><a class="pli" href="?m[action]=pl&m[i]=1">Move D - Heidelberg Gals (Parts One, Tw</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=2">Steve Brand + ISHQ - The Voice From Home</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=3">Move D + Benjamin Brunn - Love the One You're With</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=4">Bvdub - Only The Willow Remains</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=5">Aes Dana - Antimatter (ante)</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=6">Bartel - Build Four</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=7">Spectrum Vision - Anna</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=8">Aes Dana - Aftermath 05</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=9">Arne Weinberg - Omega [Outro]</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=10">Arne Weinberg - The Innermost Thoughts</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=11">Master Margherita - O Sole Mio / Sunset</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=12">Infinite Scale - Behind the Scenes</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=13">Harmonia &amp; Eno '76 - Sometimes In Autumn (Shackleton Remix)</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=14">Chilled C'quence - Circular Structure</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=15">Shulman - After Silence</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=16">Infinite Scale - Step Above the Surface</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=17">Amberflame - Traces</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=18">Rena Jones - Point of Existence</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=19">Terra Firma - Drustore</a></li>
+<li><a class="pli" href="?m[action]=pl&m[i]=20">Piel - Places Seed (remix)</a></li>
+</ul>
+
+</div>
+
+</div>
+</body>
+</html>
